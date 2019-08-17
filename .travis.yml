@@ -22,4 +22,7 @@ install:
   - pip install six
 
 script:
+  - conda info
+  - conda config --show-sources
+  - conda list --show-channel-urls
   - nosetests --nocapture --with-doctest --doctest-options=+ELLIPSIS certificate_ramblings
