@@ -1,0 +1,25 @@
+sudo: false
+language: python
+
+matrix:
+  fast_finish: true
+  include:
+  - python: 2.7
+    env:
+    - PYTHON_VERSION="2.7"
+
+before_install:
+  - wget http://repo.continuum.io/miniconda/Miniconda2-3.19.0-Linux-x86_64.sh -O miniconda.sh
+  - chmod +x miniconda.sh
+  - ./miniconda.sh -b -p /home/travis/miniconda
+  - export PATH=/home/travis/miniconda/bin:$PATH
+  - conda update --yes --quiet conda
+  - PACKAGES="python=${PYTHON_VERSION}"
+
+install:
+  - conda create --yes --quiet -n certificate-ramblings-test ${PACKAGES} pip setuptools nose
+  - source activate certificate-ramblings-test
+  - pip install six
+
+script:
+  - nosetests --nocapture --with-doctest --doctest-options=+ELLIPSIS certificate_ramblings
